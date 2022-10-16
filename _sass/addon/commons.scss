@@ -29,11 +29,11 @@ html {
 }
 
 body {
+  line-height: 1.75rem;
   background: var(--body-bg);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
   font-family: 'Source Sans Pro', 'Microsoft Yahei', sans-serif;
-  line-height: 1.75;
 }
 
 /* --- Typography --- */
@@ -76,6 +76,14 @@ h5 {
   font-size: 1.1rem;
 }
 
+ol,
+ul {
+  ol,
+  ul {
+    margin-bottom: 1rem;
+  }
+}
+
 a {
   @extend %link-color;
 }
@@ -94,22 +102,18 @@ blockquote {
     display: flex;
     border-left: 0;
     border-radius: 6px;
-    padding: 1rem;
+    padding: 0.75rem 1.2rem;
     color: var(--prompt-text-color);
 
     &::before {
+      margin-right: 1rem;
       font-family: "Font Awesome 5 Free";
       text-align: center;
       width: 1.25rem;
-      margin-right: 0.75rem;
     }
 
-    > div {
-      max-width: calc(100% - 2rem);
-
-      > :last-child {
-        margin-bottom: 0;
-      }
+    p:last-child {
+      margin-bottom: 0rem;
     }
   }
 
@@ -144,10 +148,11 @@ kbd {
 }
 
 footer {
-  font-size: 0.8rem;
-  background-color: var(--main-bg);
+  @include pl-pr(1.5rem);
 
-  div.d-flex {
+  font-size: 0.8rem;
+
+  > div.d-flex {
     height: $footer-height;
     line-height: 1.2rem;
     padding-bottom: 1rem;
@@ -444,8 +449,10 @@ img[data-src] {
 
 .post-content {
   font-size: 1.08rem;
+  line-height: 1.8;
   margin-top: 2rem;
   overflow-wrap: break-word;
+  word-wrap: break-word;
 
   a {
     &:not(.img-link) {
@@ -462,29 +469,13 @@ img[data-src] {
 
   }
 
-  > ol,
-  > ul {
-    padding-inline-start: 1.75rem;
-
-    li {
-      margin: 0.25rem 0;
-      padding-left: 0.4rem;
-    }
-
-    ol,
-    ul {
-      padding-inline-start: 1.25rem;
-      margin: 0.5rem 0;
-    }
-  }
-
   ul {
     /* attribute 'hide-bullet' was added by liquid */
     .task-list-item[hide-bullet] {
       list-style-type: none;
 
       > i { /* checkbox icon */
-        margin: 0 0.5rem 0.2rem -1.4rem;
+        margin: 0 0.4rem 0.2rem -1.4rem;
         vertical-align: middle;
         color: var(--checkbox-color);
 
@@ -501,6 +492,26 @@ img[data-src] {
     }
 
   } /* ul */
+
+  > ol,
+  > ul {
+    padding-left: 2rem;
+
+    li {
+      ol,
+      ul { /* sub list */
+        padding-left: 2rem;
+        margin-top: 0.3rem;
+      }
+    }
+
+  }
+
+  > ol {
+    li {
+      padding-left: 0.25em;
+    }
+  }
 
   dl > dd {
     margin-left: 1rem;
@@ -689,8 +700,6 @@ $sidebar-display: "sidebar-display";
   } /* #avatar */
 
   .site-title {
-    margin-top: 0.55rem;
-
     a {
       @extend %clickable-transition;
 
@@ -704,9 +713,9 @@ $sidebar-display: "sidebar-display";
   .site-subtitle {
     font-size: 95%;
     color: var(--sidebar-muted-color);
-    line-height: 1.25rem;
+    line-height: 1.2rem;
     word-spacing: 1px;
-    margin: 0.2rem 1.5rem 0.5rem 1.5rem;
+    margin: 0.5rem 1.5rem 0.5rem 1.5rem;
     min-height: 3rem; /* avoid vertical shifting in multi-line words */
     user-select: none;
   }
@@ -1043,16 +1052,14 @@ $sidebar-display: "sidebar-display";
 }
 
 #core-wrapper {
+  min-height: calc(100vh - #{$topbar-height} - #{$footer-height});
+
   .categories,
   #tags,
   #archives {
     a:not(:hover) {
       @extend %no-bottom-border;
     }
-  }
-
-  @at-root .row:only-child > #{&} {
-    padding-bottom: 3rem;
   }
 }
 
@@ -1075,9 +1082,9 @@ $sidebar-display: "sidebar-display";
 /* --- main wrapper --- */
 
 #main-wrapper {
-  background-color: var(--main-bg);
+  background-color: var(--main-wrapper-bg);
   position: relative;
-  min-height: calc(100vh - #{$footer-height});
+  min-height: 100vh;
 
   @include pl-pr(0);
 }
@@ -1182,7 +1189,7 @@ $sidebar-display: "sidebar-display";
   footer {
     height: $footer-height-mobile;
 
-    div.d-flex {
+    > div.d-flex {
       padding: 1.5rem 0;
       flex-wrap: wrap;
       -ms-flex-pack: distribute !important;
@@ -1195,10 +1202,6 @@ $sidebar-display: "sidebar-display";
     }
   }
 
-  #main-wrapper {
-    min-height: calc(100vh - #{$footer-height-mobile});
-  }
-
   #core-wrapper {
     min-height: calc(100vh - #{$topbar-height} - #{$footer-height-mobile}) !important;
 
@@ -1209,11 +1212,8 @@ $sidebar-display: "sidebar-display";
 
     .post-content {
       > blockquote[class^=prompt-] {
-        @include pl-pr(1.25rem);
         @include ml-mr(-1.25rem);
-
         border-radius: 0;
-        max-width: none;
       }
     }
 
@@ -1263,18 +1263,13 @@ $sidebar-display: "sidebar-display";
     overflow-x: hidden;
   }
 
-  footer {
-    @include slide;
-  }
-
   [#{$sidebar-display}] {
     #sidebar {
       transform: translateX(0);
     }
 
     #topbar-wrapper,
-    #main-wrapper,
-    footer {
+    #main-wrapper {
       transform: translateX(#{$sidebar-width});
     }
   }
@@ -1299,8 +1294,7 @@ $sidebar-display: "sidebar-display";
   }
 
   #topbar,
-  #main,
-  footer > .container {
+  #main {
     max-width: 100%;
   }
 
@@ -1358,7 +1352,7 @@ $sidebar-display: "sidebar-display";
 
 /* Phone & Pad */
 @media all and (min-width: 577px) and (max-width: 1199px) {
-  footer .d-flex > div {
+  footer > .d-flex > div {
     width: 312px;
   }
 }
@@ -1370,7 +1364,7 @@ $sidebar-display: "sidebar-display";
     overflow-y: scroll;
   }
 
-  #main-wrapper, footer {
+  #main-wrapper {
     margin-left: $sidebar-width;
   }
 
@@ -1399,6 +1393,10 @@ $sidebar-display: "sidebar-display";
   #back-to-top {
     bottom: 5.5rem;
     right: 5%;
+  }
+
+  #topbar {
+    @include pl-pr(2rem);
   }
 
   #topbar-title {
@@ -1440,7 +1438,7 @@ $sidebar-display: "sidebar-display";
   }
 
   #topbar-wrapper {
-    left: $sidebar-width-small;
+    left: 210px;
   }
 
   #search-results > div {
@@ -1458,8 +1456,8 @@ $sidebar-display: "sidebar-display";
     font-size: 90%;
   }
 
-  #main-wrapper, footer {
-    margin-left: $sidebar-width-small;
+  #main-wrapper {
+    margin-left: 210px;
   }
 
   #breadcrumb {
@@ -1522,10 +1520,8 @@ $sidebar-display: "sidebar-display";
     font-size: 1.03rem;
   }
 
-  footer {
-    div.d-felx {
-      width: 85%;
-    }
+  footer > div.d-felx {
+    width: 85%;
   }
 
 }
@@ -1537,7 +1533,7 @@ $sidebar-display: "sidebar-display";
 }
 
 @media all and (min-width: 1650px) {
-  #main-wrapper, footer {
+  #main-wrapper {
     margin-left: $sidebar-width-large;
   }
 
@@ -1550,8 +1546,7 @@ $sidebar-display: "sidebar-display";
   }
 
   #topbar,
-  #main,
-  footer > .container {
+  #main {
     max-width: $main-content-max-width;
   }
 
@@ -1595,8 +1590,6 @@ $sidebar-display: "sidebar-display";
       .site-title {
         @extend %profile-ml;
 
-        margin-top: 0.4rem;
-
         a {
           font-size: 1.7rem;
           letter-spacing: 1px;
@@ -1607,7 +1600,7 @@ $sidebar-display: "sidebar-display";
         @extend %profile-ml;
 
         word-spacing: 0;
-        margin-top: 0;
+        margin-top: 0.3rem;
       }
 
     } /* .profile-wrapper (min-width: 1650px) */
