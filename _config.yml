@@ -1,7 +1,8 @@
 # The Site Configuration
 
+
 # Import the theme
-theme: jekyll-theme-chirpy
+# theme: jekyll-theme-chirpy
 
 # Change the following value to '/PROJECT_NAME' ONLY IF your site type is GitHub Pages Project sites
 # and doesn't have a custom domain.
@@ -26,7 +27,7 @@ title: Blog                         # the main title
 tagline: Infra Engineer   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
-  A minimal, responsive, and powerful Jekyll theme for presenting professional writing.
+  Infra Engineer
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: 'https://s2domingo.github.io'
