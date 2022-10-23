@@ -10,3 +10,23 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
 @import "{{ site.theme }}";
 
 /* append your custom style below */
+
+
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: 'Noto Sans KR';
+	src: url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+body {
+	font-family: 'NanumSquareRound';
+}
