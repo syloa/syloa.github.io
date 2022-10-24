@@ -1,7 +1,7 @@
 ---
 title: 1 April 2022 Oracle VM VirtualBox
 author: hailey
-date: 2022-04-01 12:32:00 -0500
+date: 2022-04-01 12:32:00 +0900
 categories: [Solutions Architect Course, On-premise Infrastructure]
 tags: [VirtualBox]
 ---
