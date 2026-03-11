@@ -35,6 +35,6 @@ nav:
   - Cloud: Cloud/01.md
   - Kubernetes: Kubernetes/01.md
   - Computer Science:
-    - Database System: Computer_Science/Database/01.md
-    - Discrete_Mathematics: Computer_Science/Discrete_Mathematics/01.md
-    - Computer_Security: Computer_Science/Computer_Security/01.md
+    - Database System: Computer Science/Database/01.md
+    - Discrete Mathematics: Computer Science/Discrete_Mathematics/01.md
+    - Security: Computer Science/Computer_Security/01.md
