@@ -1,0 +1,40 @@
+site_name: syloa
+site_description: 시영이네 블로그
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: cyan
+      toggle:
+        icon: material/weather-night
+        name: 다크 모드로 전환
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: 라이트 모드로 전환
+
+extra:
+  alternate:
+    - name: 한국어
+      link: /
+      lang: ko
+    - name: English
+      link: /en/
+      lang: en
+
+nav:
+  - Home: index.md
+  - Cloud: Cloud/01.md
+  - Kubernetes: Kubernetes/01.md
+  - Computer Science:
+    - Database System: Computer_Science/Database/01.md
+    - Discrete_Mathematics: Computer_Science/Discrete_Mathematics/01.md
+    - Computer_Security: Computer_Science/Computer_Security/01.md
