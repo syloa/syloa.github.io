@@ -1,5 +1,7 @@
-site_name: syloa
-site_description: 시영이네 블로그
+site_name: 도밍고네
+site_description: 클라우드/인프라에 대해 기록하는 기술 블로그입니다.
+site_author: 이시영
+site_url: https://syloa.github.io
 theme:
   name: material
   features:
@@ -21,6 +23,10 @@ theme:
         icon: material/weather-sunny
         name: 라이트 모드로 전환
 
+plugins:
+  - search
+  - blog
+
 extra:
   alternate:
     - name: 한국어
@@ -29,10 +35,19 @@ extra:
     - name: English
       link: /en/
       lang: en
+  generator: false
+  meta:
+    google-site-verification: "google-site-verification=Z8ZH9TF33fanUzlKxd0z2WZ9QI467VLNQ6CQ36er_Wc"
 
 nav:
   - Home: index.md
-  - Cloud: Cloud/01.md
+  - Cloud: 
+      - Overview: Cloud/Overview.md
+      - Virutalization: Cloud/Virtualization.md
+      - AWS: 
+        - EKS: 
+          - AEWS: 
+            - 1주차: Cloud/AWS/EKS/AEWS/AEWS 1주차.md
   - Kubernetes: Kubernetes/01.md
   - Computer Science:
     - Database System: Computer Science/Database/01.md
