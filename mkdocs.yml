@@ -25,8 +25,20 @@ theme:
 
 plugins:
   - search
-  - blog
+  - git-revision-date-localized:
+      enable_creation_date: true
+      # fallback_to_build_date: true
+      enable_git_follow: false
+      type: date
+  # - awesome-pages
+  # - minify:
+  #     minify_html: true
+  #     minify_css: true
+  #     minify_js: true   
+  - tags:
+      tags_file: tags.md
 
+      
 extra:
   alternate:
     - name: 한국어
@@ -40,7 +52,7 @@ extra:
     google-site-verification: "google-site-verification=Z8ZH9TF33fanUzlKxd0z2WZ9QI467VLNQ6CQ36er_Wc"
 
 nav:
-  - Home: index.md
+  - Home: tags.md
   - Cloud: 
       - Overview: Cloud/Overview.md
       - Virutalization: Cloud/Virtualization.md
