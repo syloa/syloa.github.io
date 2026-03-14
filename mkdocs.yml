@@ -2,6 +2,7 @@ site_name: 도밍고네
 site_description: 클라우드/인프라에 대해 기록하는 기술 블로그입니다.
 site_author: 이시영
 site_url: https://syloa.github.io
+
 theme:
   name: material
   features:
@@ -36,32 +37,34 @@ plugins:
   #     minify_css: true
   #     minify_js: true   
   - tags:
-      tags_file: tags.md
+      tags_file: index.md
 
       
 extra:
-  alternate:
-    - name: 한국어
-      link: /
-      lang: ko
-    - name: English
-      link: /en/
-      lang: en
+  # alternate:
+  #   - name: 한국어
+  #     link: /
+  #     lang: ko
+  #   - name: English
+  #     link: /en/
+  #     lang: en
   generator: false
   meta:
     google-site-verification: "google-site-verification=Z8ZH9TF33fanUzlKxd0z2WZ9QI467VLNQ6CQ36er_Wc"
 
 nav:
-  - Home: tags.md
+  - Home: index.md
   - Cloud: 
-      - Overview: Cloud/Overview.md
-      - Virutalization: Cloud/Virtualization.md
+      - Virutalization: 
+        - 가상화 기초와 하이퍼바이저 유형: cloud/virtualization/virtualization_01.md
+        # - AWS의 가상화 기술: cloud/virtualization/virtualization_02.md
+        # - 컨테이너와 가상 머신의 차이점: cloud/virtualization/virtualization_03.md
       - AWS: 
         - EKS: 
           - AEWS: 
-            - 1주차: Cloud/AWS/EKS/AEWS/AEWS 1주차.md
-  - Kubernetes: Kubernetes/01.md
-  - Computer Science:
-    - Database System: Computer Science/Database/01.md
-    - Discrete Mathematics: Computer Science/Discrete_Mathematics/01.md
-    - Security: Computer Science/Computer_Security/01.md
+            - 1주차: cloud/aws/eks/aews/aews-week01.md
+  # - Kubernetes: kubernetes/01.md
+  # - CS:
+  #   - Database System: cs/database/01.md
+  #   - Discrete Mathematics: cs/discrete mathematics/01.md
+  #   - Security: cs/security/01.md

@@ -1,24 +1,24 @@
 ---
-title: 가상화 개념
+title: 가상화 기초와 하이퍼바이저 유형
 date: 2026-03-14
 tags:
   - Virtualization
 ---
-## 가상화
+## 가상화(Virtualization)
 가상화는 CPU/메모리/스토리지/네트워크 등의 물리적 자원을 추상화하여, 논리적으로 분할된 여러 개의 독립적인 가상환경(VM/컨테이너)을 동시에 실행할 수 있게 해주는 기술입니다. 이를 통해 하드웨어 리소스 활용률을 극대화하고, 환경을 격리하여 안전성과 유연성을 확보할 수 있습니다.
 
 이러한 가상화를 구성하고 관리하는 핵심 소프트웨어를 하이퍼바이저 또는 VMM(Virtual Machine Manager)이라고 합니다.
 
 ## 하이퍼바이저 타입
 하이퍼바이저는 하드웨어와 운영체제 사이에서 어느 위치에 설치되느냐에 따라 크게 두 가지로 나눌 수 있습니다. 
-![HyperVisor Type](/images/hypervisor_type.png)
+![HyperVisor Type](../../images/hypervisor_type.png)
 
 ### 1. Type 1 (Bare Metal/Native Hypervisors)
 - Type 1 하이퍼바이저는 운영체제 없이 하이퍼바이저가 하드웨어 계층 위에서 직접 동작하며, 여러 게스트 운영체제와 그에 할당된 하드웨어 자원(가상 CPU, 가상 메모리, 가상 디스크, 가상 네트워크 등)을 관리합니다. 
 - 게스트 OS가 하드웨어 자원을 요청할 때, 하이퍼바이저가 직접적으로 하드웨어에 명령어를 직접 전달하여 오버헤드가 적습니다. 
 - 대표 솔루션으로 VMWare ESXi, Microsoft Hyper-V, Liunx KVM, Citrix Hypervisor(구 XenServer, 젠서버) 등이 있습니다.
 
-### *KVM / Hyper-V는 왜 Type 1일까?
+#### *KVM / Hyper-V는 왜 Type 1일까?
 - 리눅스 기반의 KVM과 윈도우 기반의 Hyper-V는 하드웨어 위에서 하이퍼바이저가 직접 실행되는 Type 1에 속하지만 Host OS가 존재합니다. 
 - 리눅스나 윈도우 같은 Host OS가 존재하지만, 기능 활성화 시 Host OS가 가상화 계층 위에서 실행되는 구조를 가지므로 Type 1으로 분류됩니다.
 
