@@ -10,15 +10,17 @@ theme:
     - navigation.sections
     - navigation.expand
     - content.code.copy
+    - toc.follow
+    - navigation.top
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
+    - scheme: default
+      media: "(prefers-color-scheme: light)"
       primary: cyan
       toggle:
         icon: material/weather-night
         name: 다크 모드로 전환
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
+    - scheme: slate
+      media: "(prefers-color-scheme: dark)"
       primary: cyan
       toggle:
         icon: material/weather-sunny
@@ -62,7 +64,7 @@ nav:
       - AWS: 
         - EKS: 
           - AEWS: 
-            - 1주차: cloud/aws/eks/aews/aews-week01.md
+            - AEWS 1주차 - EKS 소개 및 배포: cloud/aws/eks/aews/aews-week01.md
   # - Kubernetes: kubernetes/01.md
   # - CS:
   #   - Database System: cs/database/01.md
