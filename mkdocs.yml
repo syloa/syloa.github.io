@@ -1,5 +1,5 @@
 site_name: 도밍고네
-site_description: 클라우드/인프라에 대해 기록하는 기술 블로그입니다.
+site_deion: 클라우드/인프라에 대해 기록하는 기술 블로그입니다.
 site_author: 이시영
 site_url: https://syloa.github.io
 
@@ -26,6 +26,11 @@ theme:
         icon: material/weather-sunny
         name: 라이트 모드로 전환
 
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.blocks.caption
+
 plugins:
   - search
   - git-revision-date-localized:
@@ -33,7 +38,7 @@ plugins:
       # fallback_to_build_date: true
       enable_git_follow: false
       type: date
-  # - awesome-pages
+  - glightbox
   # - minify:
   #     minify_html: true
   #     minify_css: true
@@ -58,9 +63,9 @@ nav:
   - Home: index.md
   - Cloud: 
       - Virutalization: 
-        - 가상화 기초와 하이퍼바이저 유형: cloud/virtualization/virtualization_01.md
-        # - AWS의 가상화 기술: cloud/virtualization/virtualization_02.md
-        # - 컨테이너와 가상 머신의 차이점: cloud/virtualization/virtualization_03.md
+        - 가상화 기초와 하이퍼바이저 유형: cloud/virtualization/virtualization-01.md
+        # - 02_가상머신과 컨테이너의 차이점: cloud/virtualization/virtualization-02.md
+        # - 03_AWS의 가상화 기술: cloud/virtualization/virtualization-03.md
       - AWS: 
         - EKS: 
           - AEWS: 
