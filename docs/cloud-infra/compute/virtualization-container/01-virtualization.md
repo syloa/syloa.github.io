@@ -2,7 +2,7 @@
 title: 가상화 기초와 하이퍼바이저 유형
 date: 2026-03-14
 tags:
-  - Virtualization
+  - Virtualization & Container
 ---
 > `git checkout 2022`
 
@@ -15,7 +15,7 @@ tags:
 
 ## 하이퍼바이저 타입
 하이퍼바이저는 하드웨어와 운영체제 사이에서 어느 위치에 설치되느냐에 따라 크게 두 가지로 나눌 수 있습니다. 
-![HyperVisor Type](../../images/hypervisor_type.png)
+![HyperVisor Type](../../../images/hypervisor_type.png)
 
 ### 1. Type 1 (Bare Metal/Native Hypervisors)
 - Type 1 하이퍼바이저는 운영체제 없이 하이퍼바이저가 하드웨어 계층 위에서 직접 동작하며, 여러 게스트 운영체제와 그에 할당된 하드웨어 자원(가상 CPU, 가상 메모리, 가상 디스크, 가상 네트워크 등)을 관리합니다. 
@@ -24,7 +24,7 @@ tags:
 
 #### *KVM / Hyper-V는 왜 Type 1일까?
 - 리눅스 기반의 KVM과 윈도우 기반의 Hyper-V는 하드웨어 위에서 하이퍼바이저가 직접 실행되는 Type 1에 속하지만 Host OS가 존재합니다. 
-- 리눅스나 윈도우 같은 Host OS가 존재하지만, 기능 활성화 시 Host OS가 가상화 계층 위에서 실행되는 구조를 가지므로 Type 1으로 분류됩니다.
+- 리눅스나 윈도우 같은 Host OS가 존재하지만, 기능 활성화 시 Host OS가 다른 Guest OS들과 함께 가상화 계층 위에서 실행되는 구조를 가지므로 Type 1으로 분류됩니다.
 
 ### 2. Type 2 (Embedded/Hosted Hypervisors):
 - 구조: Hardware → Host OS → Hypervisor → Guest OS
