@@ -1,11 +1,24 @@
+{% if page.meta.date %}
+  <div style="margin-top: 1.5rem; border-top: 1px dashed var(--md-default-fg-color--lightest); padding-top: 0.8rem;">
+    <div style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.7rem; color: var(--md-default-fg-color--lighter);">
+      <span class="twemoji" style="height: 0.8rem; width: 0.8rem;">
+        {% include ".icons/material/clock-plus.svg" %}
+      </span>
+      <span>{{ page.meta.date }}</span>
+    </div>
+  </div>
+{% endif %}
+
+{% if page.meta.comments != false %}
+<div style="margin-top: 2rem;">
   <hr>
-  <h2 id="__comments">💬 Comments</h2>
+  <h2 id="__comments"></h2>
   <script src="https://giscus.app/client.js"
           data-repo="syloa/syloa.github.io"
           data-repo-id="R_kgDORj8DMg"
           data-category="General"
           data-category-id="DIC_kwDORj8DMs4C44Ai"
-          data-mapping="og:title"
+          data-mapping="title"
           data-strict="0"
           data-reactions-enabled="1"
           data-emit-metadata="0"
@@ -16,4 +29,5 @@
           crossorigin="anonymous"
           async>
   </script>
+</div>
 {% endif %}

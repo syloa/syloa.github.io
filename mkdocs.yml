@@ -40,11 +40,13 @@ markdown_extensions:
 
 plugins:
   - search
-  - git-revision-date-localized:
-      enable_creation_date: true
-      # fallback_to_build_date: true
-      enable_git_follow: false
-      type: date
+  # - git-revision-date-localized:
+      # type: date
+      # enable_creation_date: true
+      # fallback_to_build_date: false
+      # enable_git_follow: false
+      # enabled: true
+      # strict: false
   - glightbox
   # - minify:
   #     minify_html: true
@@ -52,7 +54,7 @@ plugins:
   #     minify_js: true   
   - tags:
       tags_file: index.md
-
+  # - awesome-pages
       
 extra:
   # alternate:
