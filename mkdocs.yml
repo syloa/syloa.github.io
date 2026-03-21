@@ -5,6 +5,7 @@ site_url: https://syloa.github.io
 
 theme:
   name: material
+  custom_dir: overrides
   features:
     - navigation.tabs
     - navigation.sections
@@ -72,9 +73,17 @@ nav:
         - Virutalization & Container: 
           - 01_가상화 기초와 하이퍼바이저 유형: cloud-infra/compute/virtualization-container/01-virtualization.md
           - 02_리눅스 컨테이너 기초와 작동 원리: cloud-infra/compute/virtualization-container/02-container.md
-          # - 03_가상머신과 컨테이너의 차이점: cloud-infra/compute/virtualization-container/03-vm-container-diff.md
+          # - 03_가상머신과 컨테이너의 차이점: cloud-infra/compute/virtualization-container/03-vm-container-diff.md\
         # - AWS Compute & Container:
         #   - 01_AWS의 가상화 기술: cloud-infra/compute/aws-compute/01-aws-virtualization.md
+        #   - 02_AWS의 컨테이너 오케스트레이션 서비스: cloud-infra/compute/aws-compute/02-aws-container-orchestration.md
+        #   - ECS:
+        #     - 01_ECS 코어 아키텍쳐 및 구성 요소:
+        #     - 02_ECS Networking:
+        #     - 03_배포 전략과 서비스 디스커버리:
+        #     - 04_보안 및 스토리지:
+        #     - 05_운영 및 CI/CD:
+  
   - Kubernetes: 
     # - Vanilla K8s:
     #   - 01_Kubernetes 기초: kubernetes/vanilla/01.md
@@ -86,3 +95,4 @@ nav:
   #   - Database System: cs/database/01.md
   #   - Discrete Mathematics: cs/discrete mathematics/01.md
   #   - Security: cs/security/01.md
+  
