@@ -1,5 +1,6 @@
 ---
 title: Home
+comments: false
 ---
 
 <p align="left">
