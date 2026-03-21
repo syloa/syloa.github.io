@@ -31,16 +31,6 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - pymdownx.blocks.caption
-<<<<<<< HEAD
-
-plugins:
-  - search
-  - git-revision-date-localized:
-      enable_creation_date: true
-      # fallback_to_build_date: true
-      enable_git_follow: false
-      type: date
-=======
   - pymdownx.highlight:
         anchor_linenums: true
         line_spans: __span
@@ -57,7 +47,6 @@ plugins:
       # enable_git_follow: false
       # enabled: true
       # strict: false
->>>>>>> 5aa5b2655aa7af4c9b2ffd3c8db5c6f87c6e2ea5
   - glightbox
   # - minify:
   #     minify_html: true
@@ -81,18 +70,6 @@ extra:
 
 nav:
   - Home: index.md
-<<<<<<< HEAD
-  - Cloud: 
-      - Virutalization: 
-        - 가상화 기초와 하이퍼바이저 유형: cloud/virtualization/virtualization-01.md
-        # - 02_가상머신과 컨테이너의 차이점: cloud/virtualization/virtualization-02.md
-        # - 03_AWS의 가상화 기술: cloud/virtualization/virtualization-03.md
-      - AWS: 
-        - EKS: 
-          - AEWS: 
-            - AEWS 1주차 - EKS 소개 및 배포: cloud/aws/eks/aews/aews-week01.md
-  # - Kubernetes: kubernetes/01.md
-=======
   - Cloud & Infra: 
       - Compute:
         - Virutalization & Container: 
@@ -116,7 +93,6 @@ nav:
       - AEWS: 
         - AEWS 1주차 - EKS 소개 및 배포: kubernetes/eks/aews/aews-week01.md
         - AEWS 2주차 - EKS Networking: kubernetes/eks/aews/aews-week02.md
->>>>>>> 5aa5b2655aa7af4c9b2ffd3c8db5c6f87c6e2ea5
   # - CS:
   #   - Database System: cs/database/01.md
   #   - Discrete Mathematics: cs/discrete mathematics/01.md
