@@ -67,6 +67,9 @@ extra:
   generator: false
   meta:
     google-site-verification: "google-site-verification=Z8ZH9TF33fanUzlKxd0z2WZ9QI467VLNQ6CQ36er_Wc"
+  analytics:
+    provider: google
+    property: G-RTV54E0RW7
 
 nav:
   - Home: index.md
