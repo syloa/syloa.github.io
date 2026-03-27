@@ -1,6 +1,6 @@
 #Ignore Local Test Folders
-python3.14_venv_loca_blog/
-*python3.14_venv_loca_blog/
+python3.14-venv/
+*python3.14-venv/
 
 #Ignore Apple System Files
 .DS_Store

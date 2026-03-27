@@ -71,8 +71,8 @@ extra:
     provider: google
     property: G-RTV54E0RW7
 
-extra_css:
-  - stylesheets/extra.css
+# extra_css:
+#   - stylesheets/extra.css
   
 nav:
   - Home: index.md
@@ -97,9 +97,14 @@ nav:
     #   - 01_Kubernetes 기초: kubernetes/vanilla/01.md
     - EKS:
       - AEWS: 
-        - AEWS 1주차 - EKS 소개 및 배포: kubernetes/eks/aews/aews-week01.md
-        - AEWS 2주차 - EKS Networking: kubernetes/eks/aews/aews-week02-01.md
-        - AWES 2주차 - EKS Networking Hands-on: kubernetes/eks/aews/aews-week02-02.md
+        - AEWS 1주차:
+          - AEWS 1주차 - EKS 소개 및 배포: kubernetes/eks/aews/aews-week01.md
+        - AEWS 2주차:
+          - AEWS 2주차 - EKS Networking: kubernetes/eks/aews/aews-week02-01.md
+          - AEWS 2주차 - EKS Networking Hands-on: kubernetes/eks/aews/aews-week02-02.md
+        # - AEWS 3주차:
+        #   - AEWS 3주차 - EKS Scaling: kubernetes/eks/aews/aews-week03-01.md
+        #   - AEWS 3주차 - EKS Scaling Hands-on: kubernetes/eks/aews/aews-week03-02.md
   # - CS:
   #   - Database System: cs/database/01.md
   #   - Discrete Mathematics: cs/discrete mathematics/01.md
