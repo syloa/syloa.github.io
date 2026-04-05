@@ -1,7 +1,6 @@
 ---
 title: AEWS 2주차 - EKS Networking Hands-on
 date: 2026-03-26
-draft: true
 categories:
   - Kubernetes
   - AWS

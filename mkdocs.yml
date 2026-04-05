@@ -1,7 +1,7 @@
 site_name: 도밍고네
 site_deion: 클라우드/인프라에 대해 기록하는 기술 블로그입니다.
 site_author: 이시영
-site_url: https://syloa.github.io
+site_url: https://syloa.github.io/
 
 theme:
   name: material
@@ -21,7 +21,7 @@ theme:
         icon: material/weather-night
         name: 다크 모드로 전환
     - scheme: slate
-      media: "(prefers-color-scheme: dark)"
+      media: "(prefers-color-scheme: light)"
       primary: cyan
       toggle:
         icon: material/weather-sunny
@@ -102,9 +102,10 @@ nav:
         - AEWS 2주차:
           - AEWS 2주차 - EKS Networking: kubernetes/eks/aews/aews-week02-01.md
           - AEWS 2주차 - EKS Networking Hands-on: kubernetes/eks/aews/aews-week02-02.md
-        # - AEWS 3주차:
-        #   - AEWS 3주차 - EKS Scaling: kubernetes/eks/aews/aews-week03-01.md
-        #   - AEWS 3주차 - EKS Scaling Hands-on: kubernetes/eks/aews/aews-week03-02.md
+        - AEWS 3주차:
+          - AEWS 3주차 - 1) EKS Pod Scaling: kubernetes/eks/aews/aews-week03-01.md
+          - AEWS 3주차 - 2) EKS Node Scaling: kubernetes/eks/aews/aews-week03-02.md
+          - AEWS 3주차 - 3) EKS Monitoring: kubernetes/eks/aews/aews-week03-03.md
   # - CS:
   #   - Database System: cs/database/01.md
   #   - Discrete Mathematics: cs/discrete mathematics/01.md

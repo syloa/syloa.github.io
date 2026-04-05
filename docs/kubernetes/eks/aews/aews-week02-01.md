@@ -1,7 +1,6 @@
 ---
 title: AEWS 2주차 - EKS Networking
 date: 2026-03-21
-draft: true
 categories:
   - Kubernetes
   - AWS
@@ -291,7 +290,7 @@ CoreDNS가 이름을 제대로 해석하고 있는지 테스트용 파드를 띄
 ## 6. 서비스로 Pod 외부 노출
 
 Pod가 재시작되면 새로운 Pod IP 주소가 할당되므로, IP 주소를 통한 Pod 간 통신은 시간이 지남에 따라 안정적인 네트워크 엔드포인트를 보장하지 않습니다. 
-Service를 통하여 Pod의 재시작에 따른 IP 변경과 무관한 안정적인 엔드포인트를 제공하고, Pod 간 부하를 분산할 수 있습니다. 
+Service를 통하여 Pod의 재시작에 따른 IP 변경과 무관한 안정적인 엔드포인트를 제공하고, Pod 집합 간의 부하를 분산할 수 있습니다. 
 
 **K8s Service 종류**
 
