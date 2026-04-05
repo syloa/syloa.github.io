@@ -1,7 +1,6 @@
 ---
 title: AEWS 3주차 - 3) EKS Monitoring
 date: 2026-03-31
-draft: true
 categories:
   - Kubernetes
   - AWS
