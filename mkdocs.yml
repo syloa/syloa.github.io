@@ -1,7 +1,8 @@
 site_name: 도밍고네
-site_deion: 클라우드/인프라에 대해 기록하는 기술 블로그입니다.
+site_description: 클라우드/인프라에 대해 기록하는 기술 블로그입니다.
 site_author: 이시영
 site_url: https://syloa.github.io/
+use_directory_urls: true
 
 theme:
   name: material
@@ -39,7 +40,8 @@ markdown_extensions:
   - pymdownx.superfences
 
 plugins:
-  - search
+  - search:
+      lang: [en, ko]
   # - git-revision-date-localized:
       # type: date
       # enable_creation_date: true
@@ -55,11 +57,22 @@ plugins:
   - tags:
       tags_file: index.md
   # - awesome-pages
+  # - i18n:
+  #     languages:
+  #       - locale: en 
+  #         name: English
+  #         default: true
+  #         build: true
+  #         fallback_to: kr
+  #       - locale: ko
+  #         name: 한국어
+  #         build: true
+  #         fallback_to: en
       
 extra:
   # alternate:
   #   - name: 한국어
-  #     link: /
+  #     link: /ko/
   #     lang: ko
   #   - name: English
   #     link: /en/
