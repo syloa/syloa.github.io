@@ -764,7 +764,7 @@ export KARPENTER_VERSION="1.10.0"
 export K8S_VERSION="1.34"
 export AWS_PARTITION="aws"
 export CLUSTER_NAME="${USER}-karpenter-demo"
-export AWS_DEFAULT_REGION="ap-northeast-2"
+export AWS_DEFAULT_REGION="ap-southeast-1"
 export AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
 export TEMPOUT="$(mktemp)"
 export ALIAS_VERSION="$(aws ssm get-parameter --name "/aws/service/eks/optimized-ami/${K8S_VERSION}/amazon-linux-2023/x86_64/standard/recommended/image_id" --query Parameter.Value --output text | xargs aws ec2 describe-images --query 'Images[0].Name' --image-ids --output text | sed -E 's/^.*(v[0-9]+).*$/\1/')"
@@ -841,8 +841,8 @@ eksctl get addon --cluster ${CLUSTER_NAME}
 
 # config rename-context
 kubectl ctx
-kubectl config rename-context "<각자 자신의 IAM User>@<자신의 Nickname>-karpenter-demo.ap-northeast-2.eksctl.io" "karpenter-demo"
-kubectl config rename-context "admin@gasida-karpenter-demo.ap-northeast-2.eksctl.io" "karpenter-demo"
+kubectl config rename-context "<각자 자신의 IAM User>@<자신의 Nickname>-karpenter-demo.ap-southeast-1.eksctl.io" "karpenter-demo"
+kubectl config rename-context "admin@gasida-karpenter-demo.ap-southeast-1.eksctl.io" "karpenter-demo"
 
 kubectl ns default
 kubectl cluster-info
@@ -1429,7 +1429,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 metadata:
   name: my-cluster
-  region: ap-northeast-2
+  region: ap-southeast-1
 
 fargate_profiles:
   study_wildcard:
@@ -1537,7 +1537,7 @@ data:
     [OUTPUT]
         Name cloudwatch_logs
         Match kube.*
-        region ap-northeast-2
+        region ap-southeast-1
         log_group_name /fargate/logs
         log_stream_prefix from-fargate-
         auto_create_group true
@@ -1773,7 +1773,7 @@ kubectl scale deployment game-2048 -n study-aews --replicas 4
 
 # IP target 모드로 ALB가 바로 파드의 VPC IP로 연결되는지 확인
 kubectl get pods -n study-aews -l app=game-2048 -o wide
-aws ec2 describe-network-interfaces --region ap-northeast-2 \
+aws ec2 describe-network-interfaces --region ap-southeast-1 \
   --filters "Name=description,Values=*game-2048*"
 ```
 
@@ -1828,11 +1828,11 @@ kubectl logs -f -n study-aews deployment/game-2048
 kubectl logs -n study-aews game-2048-xxxxxx
 
 # CloudWatch 로그 그룹 확인 (AWS CLI 사용)
-aws logs describe-log-groups --region ap-northeast-2 \
+aws logs describe-log-groups --region ap-southeast-1 \
   --query 'logGroups[?contains(logGroupName, `fargate`)]' | head -20
 
 # CloudWatch 로그 스트림 확인
-aws logs describe-log-streams --region ap-northeast-2 \
+aws logs describe-log-streams --region ap-southeast-1 \
   --log-group-name /fargate/logs \
   --max-items 5
 ```
