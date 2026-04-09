@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://syloa.github.io/sitemap
 Sitemap: https://syloa.github.io/sitemap.xml
