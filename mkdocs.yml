@@ -79,7 +79,7 @@ extra:
   #     lang: en
   generator: false
   meta:
-    google-site-verification: "google-site-verification=Z8ZH9TF33fanUzlKxd0z2WZ9QI467VLNQ6CQ36er_Wc"
+    google-site-verification: "google-site-verification=9enAp2_KQ_J2TbYSbYhtTF7RUfFLFytvhnAM0TeX8sg"
   analytics:
     provider: google
     property: G-RTV54E0RW7
@@ -104,6 +104,7 @@ nav:
         #     - 03_배포 전략과 서비스 디스커버리:
         #     - 04_보안 및 스토리지:
         #     - 05_운영 및 CI/CD:
+        
   
   - Kubernetes: 
     # - Vanilla K8s:
