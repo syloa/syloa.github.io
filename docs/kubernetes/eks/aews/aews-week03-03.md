@@ -87,7 +87,7 @@ eks-node-viewer --extra-labels kubernetes.io/arch**
 **eks-node-viewer --node-selector "karpenter.sh/***provisioner-name***"**
 
 # Specify a particular AWS profile and region
-AWS_PROFILE=myprofile AWS_REGION=us-west-2
+AWS_PROFILE=myprofile AWS_REGION=ap-southeast-1
 
 **Computed Labels** : --extra-labels
 # eks-node-viewer/node-age - Age of the node
@@ -247,6 +247,15 @@ kubectl delete ingress -n kube-system kubeopsview
 ```bash
 # repo 추가
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+## Helm Chart Repository 추가
+helm repo add eks https://aws.github.io/eks-charts
+helm repo update
+
+# Helm Chart - AWS Load Balancer Controller 설치 : EC2 Instance Profile(IAM Role)을 파드가 IMDS 통해 획득 가능!
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --version 3.1.0 \
+  --set clusterName=myeks
+
 
 # helm values 파일 생성 : additionalScrapeConfigs 는 아래 설명
 cat <<EOT > monitor-values.yaml
@@ -499,6 +508,8 @@ kubectl rolesum kube-prometheus-stack-prometheus -n monitoring
 
 #### 3.1.2. 도전과제 
 
+> 참고자료: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+
 - `도전과제` kube-prometheus-stack helm 배포 시, **eks etcd 메트릭**을 가져올 수 있게 프로메테우스에 설정해보기
     - 
 ```yaml
@@ -535,19 +546,85 @@ prometheus:
 
     - ![](images/i54g-rpmn0th54.png)
 
-<!-- - `도전과제` kube-prometheus-stack helm 배포 시, **그라파나에 대시보드(kcm, scheduler 등) 링크를 추가**해서 배포되게 해보기
+- `도전과제` kube-prometheus-stack helm 배포 시, **그라파나에 대시보드(kcm, scheduler 등) 링크를 추가**해서 배포되게 해보기
+
+- Helm Values 설정 (대시보드 프로비저닝 활성화 및 기본 수집기 비활성화)
     - 
 ```yaml
-# helm values 파일 `grafana`필드에 아래 설정 추가:
-grafana: 
-  dashboards:
-    default:
-      # https://grafana.com/grafana/dashboards/16321 (EKS Control Plane 예시)
-      eks-control-plane:
-        gnetId: 16321
-        revision: 1
-        datasource: Prometheus
-``` -->
+# helm values 파일 `grafana`필드에 아래 설정 확인(Default가 true이므로 생략해도 무방)
+# Sidecar가 ConfigMap을 감지하여 대시보드 생성
+grafana:
+  defaultDashboardsTimezone: Asia/Seoul
+  adminPassword: prom-operator
+  defaultDashboardsEnabled: true # Helm 차트에 내장된 기본 대시보드 활성화
+
+# EKS 컨트롤 플레인 컴포넌트 활성화 및 ServiceMonitor 제어
+# EKS는 컨트롤 플레인에 직접 접근할 수 없으므로, 기본 ServiceMonitor는 끄고 대시보드만 생성하도록 true 처리
+# ServiceMonitor 대신 데이터는 아래 additionalScrapeConfigs로 수집
+kubeControllerManager:
+  enabled: true
+  serviceMonitor:
+    enabled: false
+kubeEtcd:
+  enabled: true
+  serviceMonitor:
+    enabled: false
+kubeScheduler:
+  enabled: true
+  serviceMonitor:
+    enabled: false
+prometheus-windows-exporter:
+  prometheus:
+    monitor:
+      enabled: false
+```
+
+- Prometheus 수집 설정 변경 (Job Name 설정)
+    - 
+```yaml
+# `prometheus.prometheusSpec` 필드의 additionalScrapeConfigs 설정
+# kube-prometheus-stack이 제공하는 기본 대시보드는 이미 내부에 PromQL 쿼리와 변수가 지정되어있다. 
+# 예: 'job="kube-controller-manager"
+# 수집하는 데이터의 job 이름이 이와 일치하지 않으면 메트릭에서 데이터를 볼 수 없다. 
+# 대시보드 필터에서 job을 커스텀으로 변경할 수도 있지만 공식 대시보드 이름으로 프로메테우스 job_name을 맞춰주는 것이 수작업을 줄일 수 있다. 
+# # EKS 메트릭 엔드포인트를 통해 데이터를 수집하되, 기본 대시보드가 요구하는 표준 job 이름으로 강제 매핑하여 그라파나 변수(Variables) 필터링을 통과하도록 수정
+additionalScrapeConfigs:
+      # apiserver metrics
+      - job_name: 'apiserver'  # (기존 apiserver-metrics 에서 변경)
+        kubernetes_sd_configs:
+        # ... 
+      # Scheduler metrics
+      - job_name: 'kube-scheduler'  # (기존 ksh-metrics 에서 변경)
+        kubernetes_sd_configs:
+        # ... 
+      # Controller Manager metrics
+      - job_name: 'kube-controller-manager'  # (기존 kcm-metrics 에서 변경)
+        kubernetes_sd_configs:
+        # ... 
+      # etcd metrics
+      - job_name: 'etcd'  # (기존 etcd-metrics 에서 변경)
+        kubernetes_sd_configs:
+        # ... 
+```
+
+- ConfigMap에 저장된 기본 대시보드 확인
+    - 
+```bash
+kubectl get configmap -n monitoring -l grafana_dashboard=1
+
+# 위에서 찾은 configmap 이름을 넣어서 확인
+kubectl get configmap <configmap 이름> -n monitoring -o yaml
+```
+
+- Helm Upgrade 명령어 실행
+    - 
+```bash
+helm upgrade -i kube-prometheus-stack prometheus-community/kube-prometheus-stack --version 80.13.3 \
+-f monitor-values.yaml --create-namespace --namespace monitoring
+```
+
+- 배포 후 생성된 기본 대시보드
+![](images/i46g-rpmn5th46.png)
 
 
 - **최종 values 파일**
@@ -559,7 +636,7 @@ prometheus:
     serviceMonitorSelectorNilUsesHelmValues: false
     additionalScrapeConfigs:
       # apiserver metrics
-      - job_name: apiserver-metrics
+      - job_name: apiserver
         kubernetes_sd_configs:
         - role: endpoints
         scheme: https
@@ -577,7 +654,7 @@ prometheus:
           action: keep
           regex: default;kubernetes;https
       # Scheduler metrics
-      - job_name: 'ksh-metrics'
+      - job_name: 'kube-scheduler'
         kubernetes_sd_configs:
         - role: endpoints
         metrics_path: /apis/metrics.eks.amazonaws.com/v1/ksh/container/metrics
@@ -596,7 +673,7 @@ prometheus:
           action: keep
           regex: default;kubernetes;https
       # Controller Manager metrics
-      - job_name: 'kcm-metrics'
+      - job_name: 'kube-controller-manager'
         kubernetes_sd_configs:
         - role: endpoints
         metrics_path: /apis/metrics.eks.amazonaws.com/v1/kcm/container/metrics
@@ -615,7 +692,7 @@ prometheus:
           action: keep
           regex: default;kubernetes;https
       # etcd metrics
-      - job_name: 'etcd-metrics'
+      - job_name: 'kube-etcd'
         kubernetes_sd_configs:
         - role: endpoints
         metrics_path: /apis/metrics.eks.amazonaws.com/v1/etcd/container/metrics
@@ -632,10 +709,8 @@ prometheus:
   # Enable vertical pod autoscaler support for prometheus-operator
   #verticalPodAutoscaler:
   #  enabled: true
-
   serviceAccount:
     create: true
-  # 프로메테우스가 사용할 ClusterRole에 추가 규칙 정의
   additionalRulesForClusterRole:
     - apiGroups: ["metrics.eks.amazonaws.com"]
       resources: ["kcm/metrics", "ksh/metrics", "etcd/metrics"]
@@ -645,14 +720,14 @@ prometheus:
     enabled: true
     ingressClassName: alb
     hosts: 
-      - prometheus.$MyDomain
+      - prometheus.siyoung.cloud
     paths: 
       - /*
     annotations:
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
-      alb.ingress.kubernetes.io/certificate-arn: $CERT_ARN
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-southeast-1:447659471488:certificate/bb69c648-0f56-44b1-8112-532d66cebf15
       alb.ingress.kubernetes.io/success-codes: 200-399
       alb.ingress.kubernetes.io/load-balancer-name: myeks-ingress-alb
       alb.ingress.kubernetes.io/group.name: study
@@ -661,30 +736,36 @@ prometheus:
 grafana:
   defaultDashboardsTimezone: Asia/Seoul
   adminPassword: prom-operator
+  defaultDashboardsEnabled: true # Helm 차트에 내장된 기본 대시보드 활성화 (Default값 = true)
+
+  sidecar:
+    datasources:
+      enabled: true
+      url: http://prometheus-operated:9090
 
   ingress:
     enabled: true
     ingressClassName: alb
     hosts: 
-      - grafana.$MyDomain
+      - grafana.siyoung.cloud
     paths: 
       - /*
     annotations:
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
-      alb.ingress.kubernetes.io/certificate-arn: $CERT_ARN
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-southeast-1:447659471488:certificate/bb69c648-0f56-44b1-8112-532d66cebf15
       alb.ingress.kubernetes.io/success-codes: 200-399
       alb.ingress.kubernetes.io/load-balancer-name: myeks-ingress-alb
       alb.ingress.kubernetes.io/group.name: study
       alb.ingress.kubernetes.io/ssl-redirect: '443'
 
 kubeControllerManager:
-  enabled: false
+  enabled: true
 kubeEtcd:
-  enabled: false
+  enabled: true
 kubeScheduler:
-  enabled: false
+  enabled: true
 prometheus-windows-exporter:
   prometheus:
     monitor:
