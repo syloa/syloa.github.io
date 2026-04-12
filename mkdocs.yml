@@ -119,6 +119,10 @@ nav:
           - AEWS 3주차 - 1) EKS Pod Scaling: kubernetes/eks/aews/aews-week03-01.md
           - AEWS 3주차 - 2) EKS Node Scaling: kubernetes/eks/aews/aews-week03-02.md
           - AEWS 3주차 - 3) EKS Monitoring: kubernetes/eks/aews/aews-week03-03.md
+        - AEWS 4주차:
+          - AEWS 4주차 - 1) EKS AuthN/AuthZ: kubernetes/eks/aews/aews-week04-01.md
+          - AEWS 4주차 - 2) IAM Principal → EKS API: kubernetes/eks/aews/aews-week04-02.md
+          - AEWS 4주차 - 3) Pod → AWS API: kubernetes/eks/aews/aews-week04-03.md
   # - CS:
   #   - Database System: cs/database/01.md
   #   - Discrete Mathematics: cs/discrete mathematics/01.md
