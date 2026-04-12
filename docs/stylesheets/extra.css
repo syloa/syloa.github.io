@@ -1,0 +1,27 @@
+/* 전체 컨테이너 너비를 적당하게 제한 (기본은 약 1224px임) */
+.md-grid {
+    max-width: 75rem !important; /* 70~80rem 사이가 황금 밸런스입니다 */
+}
+
+/* 본문 영역 너비 설정 */
+.md-main__inner {
+    max-width: 100% !important;
+}
+
+/* 실제 글자 영역이 너무 퍼지지 않게 조절 */
+.md-content {
+    max-width: 100% !important;
+}
+
+/* (선택) 코드 블록이나 테이블이 너무 답답하면 이 부분만 살짝 더 넓게 쓸 수 있어요 */
+.md-typeset table {
+    width: 100%;
+    display: table;
+}
+
+/* 본문 내의 모든 이미지가 본문 너비를 넘지 않도록 하고, 중앙에 배치 */
+.md-typeset img {
+    max-width: 65% !important;  /* 본문 너비의 60%로 제한 */
+    height: auto !important;    /* 비율 유지 */
+    border-radius: 4px;         /* (선택) 깔끔하게 모서리 정리 */
+}
