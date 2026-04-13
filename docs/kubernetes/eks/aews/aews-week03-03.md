@@ -624,6 +624,7 @@ helm upgrade -i kube-prometheus-stack prometheus-community/kube-prometheus-stack
 ```
 
 - 배포 후 생성된 기본 대시보드
+    - 
 ![](images/i46g-rpmn5th46.png)
 
 
