@@ -39,7 +39,16 @@ markdown_extensions:
         line_spans: __span
         pygments_lang_class: true
   - pymdownx.inlinehilite
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid
+  - admonition
+  - pymdownx.details
+  - pymdownx.tasklist:
+      custom_checkbox: true
+      clickable_checkbox: true
 plugins:
   - search:
       lang: [en, ko]
@@ -123,6 +132,8 @@ nav:
           - AEWS 3주차 - 3) EKS Monitoring: kubernetes/eks/aews/aews-week03-03.md
         - AEWS 4주차:
           - AEWS 4주차 - EKS AuthN/AuthZ: kubernetes/eks/aews/aews-week04-01.md
+        - AEWS 5주차:
+          - AEWS 5주차 - EKS Troubleshooting: kubernetes/eks/aews/aews-week05-01.md
   # - CS:
   #   - Database System: cs/database/01.md
   #   - Discrete Mathematics: cs/discrete mathematics/01.md
