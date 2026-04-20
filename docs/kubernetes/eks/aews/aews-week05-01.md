@@ -1,7 +1,6 @@
 ---
 title: AEWS 5주차 - EKS Troubleshooting
-date: 2026-03-31
-draft: true
+date: 2026-04-19
 categories:
   - Kubernetes
   - AWS
@@ -383,13 +382,13 @@ ALB와 kubelet이 동시에 상태를 감지하도록 주기를 맞춰야 합니
 
 ### AWS 공식 문서
 - [AWS 블로그: How to rapidly scale your application with ALB on EKS without losing traffic](https://aws.amazon.com/ko/blogs/containers/how-to-rapidly-scale-your-application-with-alb-on-eks-without-losing-traffic/)
-  - 504/502 에러 완전 제거 및 감소 결과 포함 Order API 예제
+    - 504/502 에러 완전 제거 및 감소 결과 포함 Order API 예제
 - [AWS Load Balancer Controller - Health Check Annotations](https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/ingress/annotations/#healthcheck)
-  - 모든 healthcheck 관련 annotation 상세 설명
+    - 모든 healthcheck 관련 annotation 상세 설명
 - [AWS Load Balancer Controller - Target Group Attributes](https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/ingress/annotations/#target-group-attributes)
-  - deregistration-delay, stickiness 등 TG 설정
+    - deregistration-delay, stickiness 등 TG 설정
 - [aws-samples/app-health-with-aws-load-balancer-controller](https://github.com/aws-samples/app-health-with-aws-load-balancer-controller)
-  - Python, Node.js 등 다양한 언어의 graceful shutdown 구현 예제
+    - Python, Node.js 등 다양한 언어의 graceful shutdown 구현 예제
 
 
 
