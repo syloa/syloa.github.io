@@ -1,4 +1,4 @@
-site_name: 도밍고네
+site_name: Domingo Doodles
 site_description: 클라우드/인프라에 대해 기록하는 기술 블로그입니다.
 site_author: 이시영
 site_url: https://syloa.github.io/
@@ -19,13 +19,13 @@ theme:
   palette:
     - scheme: default
       media: "(prefers-color-scheme: light)"
-      primary: cyan
+      primary: black
       toggle:
         icon: material/weather-night
         name: 다크 모드로 전환
     - scheme: slate
       media: "(prefers-color-scheme: light)"
-      primary: cyan
+      primary: black
       toggle:
         icon: material/weather-sunny
         name: 라이트 모드로 전환
@@ -97,6 +97,7 @@ extra:
 
 extra_css:
   - stylesheets/extra.css
+  - stylesheets/custom.css
   
 nav:
   - Home: index.md

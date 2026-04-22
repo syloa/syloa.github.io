@@ -1,6 +1,18 @@
 #Ignore Local Test Folders
-python3.14-venv/
-*python3.14-venv/
+venv-blog/
+*venv-blog/
 
 #Ignore Apple System Files
 .DS_Store
+
+# Hugo Files
+syloa-blog/
+*syloa-blog/
+syloa-blog-2/
+*syloa-blog-2/
+syloa-blog-hextra/
+*syloa-blog-hextra/
+
+# Private Notes
+private-notes/
+*private-notes/

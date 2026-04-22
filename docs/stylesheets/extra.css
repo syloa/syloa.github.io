@@ -1,4 +1,9 @@
 /* 전체 컨테이너 너비를 적당하게 제한 (기본은 약 1224px임) */
+:root {
+  /* 기본 전체 글씨 크기 조절 (Material 테마 기준) */
+  --md-typeset-font-size: 0.75rem; 
+}
+
 .md-grid {
     max-width: 75rem !important; /* 70~80rem 사이가 황금 밸런스입니다 */
 }
@@ -24,4 +29,17 @@
     max-width: 65% !important;  /* 본문 너비의 60%로 제한 */
     height: auto !important;    /* 비율 유지 */
     border-radius: 4px;         /* (선택) 깔끔하게 모서리 정리 */
+}
+
+
+html {
+  font-size: 90%; /* 전체적인 비율을 줄임 */
+}
+
+p {
+  font-size: 0.9rem; /* 본문 문단 크기 */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 1rem; /* 제목 크기 */
 }
