@@ -1,6 +1,6 @@
 site_name: Domingo Doodles
-site_description: 클라우드/인프라에 대해 기록하는 기술 블로그입니다.
-site_author: 이시영
+site_description: Scribbling about Cloud, Infra, and everything in between
+site_author: Siyoung Lee
 site_url: https://syloa.github.io/
 use_directory_urls: true
 
@@ -12,7 +12,8 @@ theme:
     - navigation.sections
     - navigation.expand
     - content.code.copy
-    - toc.follow
+    # - toc.follow # Side TOC
+    - toc.integrate
     - navigation.top
     - touch
     - content.tabs.link
@@ -67,6 +68,12 @@ plugins:
   - tags:
       tags_file: index.md
   - mermaid2
+  - enumerate-headings:
+      toc_depth: 6
+      increment_across_pages: false
+      start_level: 2
+      exclude:
+        - index.md
   # - awesome-pages
   # - i18n:
   #     languages:
@@ -96,7 +103,7 @@ extra:
     property: G-RTV54E0RW7
 
 extra_css:
-  - stylesheets/extra.css
+  # - stylesheets/extra.css
   - stylesheets/custom.css
   
 nav:
@@ -135,6 +142,13 @@ nav:
           - AEWS 4주차 - EKS AuthN/AuthZ: kubernetes/eks/aews/aews-week04-01.md
         - AEWS 5주차:
           - AEWS 5주차 - EKS Troubleshooting: kubernetes/eks/aews/aews-week05-01.md
+        # - AEWS 6주차:
+        #   - AEWS 6주차 - EKS Best Practices: kubernetes/eks/aews/aews-week06-01.md
+  - Talks:
+    - 2026:
+      - AWS Partner Summit Seoul 2026:
+        - AWS Partner Summit Seoul 2026 - AWS Transform (ATX): talks/2026/aws-partner-summit-seoul-2026/aws-partner-summit-2026-atx.md
+        # - AWS Partner Summit Seoul 2026 - Multi-Agent 시스템 구축: talks/2026/aws-partner-summit-seoul-2026/aws-partner-summit-2026-multi-agent.md
   # - CS:
   #   - Database System: cs/database/01.md
   #   - Discrete Mathematics: cs/discrete mathematics/01.md

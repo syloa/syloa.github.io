@@ -591,6 +591,7 @@ terraform apply -target="module.vpc" -auto-approve
 terraform apply -auto-approve
 ```
 ![alt text](../../../images/aews-week01-eks-private.png)
+
 API server endpoint access 옵션이 Private인 클러스터가 생성됩니다.
 
 4) 자격증명 설정

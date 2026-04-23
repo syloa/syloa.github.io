@@ -18,7 +18,7 @@ tags:
 <!-- 와  I/O 경로 특성 -->
 ![HyperVisor Type](../../../images/hypervisor_type.png)
 
-### 1. Type 1 (Bare Metal/Native Hypervisors)
+### Type 1 (Bare Metal/Native Hypervisors)
 - Type 1 하이퍼바이저는 운영체제 없이 하이퍼바이저가 하드웨어 계층 위에서 직접 동작하며, 여러 게스트 운영체제와 그에 할당된 하드웨어 자원(가상 CPU, 가상 메모리, 가상 디스크, 가상 네트워크 등)을 관리합니다. 
 - 게스트 OS가 하드웨어 자원을 요청할 때, 하이퍼바이저가 직접적으로 하드웨어에 명령어를 직접 전달하여 오버헤드가 적습니다. 
 - 일반적으로 서버 가상화(데이터센터/클라우드)에서 표준적으로 사용됩니다.
@@ -29,7 +29,7 @@ tags:
 - KVM은 Linux 커널의 가상화 기능을 활용해 커널 자체가 하이퍼바이저 역할을 수행합니다.
 - Hyper-V는 기능 활성화 시 기존 Windows OS가 Parent Partition으로 동작하고, 다른 Guest OS들은 별도 Child Partition에서 실행되는 구조입니다.
 
-### 2. Type 2 (Embedded/Hosted Hypervisors):
+### Type 2 (Embedded/Hosted Hypervisors):
 - 구조: Hardware → Host OS → Hypervisor → Guest OS
 - Windows/macOS/Linux 같은 일반 목적 Host OS 위에 애플리케이션 형태로 설치됩니다.
 - 하드웨어 계층 위에 Host OS 계층이 있고, 그 위에 하이퍼바이저가 존재합니다. 하이퍼바이저 위에서 여러 Guest OS가 독립적으로 실행됩니다.
@@ -41,18 +41,18 @@ tags:
 ## 가상화 구현 방식
 Guest OS를 어떻게 실행하고 I/O를 어떻게 최적화하는지 가상화 구현 방식에 따라 다릅니다. 실제 운영 환경에서는 이 방식들이 섞여 동작하는 경우가 많습니다.
 
-### 1. 호스트 가상화(Hosted Hypervisors)
+### 호스트 가상화(Hosted Hypervisors)
 - 구조: Hardware → Host OS → Hypervisor → Guest OS
 - 일반 목적 OS 위에서 하이퍼바이저가 동작하는 방식으로, 위의 Type 2와 동일한 개념입니다. 개발용 VM이나 데스크톱 가상화에서 흔히 볼 수 있습니다.
 
-### 2. 전가상화 (Full Virtualization)
+### 전가상화 (Full Virtualization)
 - 구조: Hardware → Hypervisor(Type 1) → Guest OS
 - 하이퍼바이저가 하드웨어 전체를 완벽하게 추상화하여 Guest OS에 제공하는 방식입니다. Guest OS는 자신이 가상 환경에서 돌아가고 있다는 사실을 인지하지 못하며, 베어 메탈 서버에 설치되어있는 것처럼 동작합니다.
 - 초기에는 하이퍼바이저가 Guest OS의 특권 명령을 처리하기 위해 이진 번역(Binary Translation)으로 처리해 성능 오버헤드가 발생할 수 있었습니다.
 - 게스트 OS를 수정하지 않고도 실행 가능한 방식입니다.
 - 현재는 하드웨어 지원 가상화(Intel VT-x/AMD-V)가 결합되어, 과거 대비 오버헤드가 크게 완화되었습니다.
 
-### 3. 반가상화 (Paravirtualization)
+### 반가상화 (Paravirtualization)
 - 구조: Hardware → Hypervisor(Type 1) → Modified Guest OS
 - 게스트 OS의 커널을 수정하여, 번역 과정 없이 '하이퍼콜(Hyper Call)'이라는 인터페이스를 통해 하이퍼바이저와 통신합니다. 게스트 OS는 자신이 가상환경에서 돌아가고 있다는 것을 인식하고 있으며, 하이퍼바이저와 소통하기 위한 수단인 하이퍼콜을 사용합니다.
 - 전가상화와 다르게 하이퍼바이저가 명령을 가로채어 이진 번역할 필요 없이, Guest OS가 하이퍼콜(Hypercall)이라는 전용 API를 통해 하이퍼바이저에게 직접 자원 제어를 요청하므로 오버헤드가 크게 줄어듭니다.
@@ -62,7 +62,7 @@ Guest OS를 어떻게 실행하고 I/O를 어떻게 최적화하는지 가상화
 - 실무 환경에서는 완전한 반가상화보다는 PV 드라이버(VirtIO 등)를 통해 디스크와 네트워크 I/O를 최적화하는 형태가 더 일반적입니다.
 
 
-### 4. 하드웨어 지원 가상화 (Hardware-assisted Virtualization)
+### 하드웨어 지원 가상화 (Hardware-assisted Virtualization)
 - 구조: Hardware → Hypervisor → Guest OS
 - 하드웨어 지원 가상화는 성능 저하를 일으키던 이진 번역의 필요성을 없애고, CPU 하드웨어 차원에서 가상화 전용 실행 공간을 제공하여 Guest OS의 명령이 하이퍼바이저 개입 없이 CPU에서 직접 실행되도록 돕는 방식입니다.
 - CPU가 가상화 실행 모드와 메모리 가상화 기능을 제공해 하이퍼바이저 구현 부담을 줄이고 성능을 개선합니다.
