@@ -11,7 +11,7 @@ tags:
 ---
 > *CloudNet 팀의 [2026년 AWS EKS Workshop Study 4기](https://gasidaseo.notion.site/26-AWS-EKS-Hands-on-Study-4-31a50aec5edf804b8294d8d512c43370) 2주차 학습 내용을 담고 있습니다.*
 
-## 1. 실습 환경 구성
+## 실습 환경 구성
 2주차 실습 자료를 다운로드 받아 실습 환경을 구성하였습니다. <br/>
 금주 Pod의 IP 할당 실습이 진행될 예정으로, Terraform 코드 내 서브넷 마스크가 22로 변경되어 있습니다. 
 
@@ -40,7 +40,7 @@ aws eks --region ap-southeast-1 update-kubeconfig --name myeks
 kubectl config rename-context $(cat ~/.kube/config | grep current-context | awk '{print $2}') myeks
 ```
 
-## 2. EKS 기본 정보 확인
+## EKS 기본 정보 확인
   
 ```Bash
 # 클러스터 확인
@@ -107,7 +107,7 @@ vpc-cni         v1.21.1-eksbuild.5      ACTIVE  0                               
 
 ---
 
-## 3. 노드의 네트워크 정보 확인
+## 노드의 네트워크 정보 확인
 
 ```Bash
 # EC2 ENI IP 확인
@@ -181,7 +181,7 @@ ssh ec2-user@$N1 sudo iptables -t nat -L -n -v
 
 ```
 
-### 3.1. 워커 노드의 ENI 확인
+### 워커 노드의 ENI 확인
 
 - 실습용으로 생성한 t3.medium 타입의 경우 ENI는 3개, ENI마다 최대 6개의 IP를 가질 수 있습니다. 그 중 Secondary IP만 포드에 할당이 가능하므로 노드 하나 당 최대 15개까지의 포드 생성이 가능합니다.
 
@@ -215,7 +215,7 @@ default via 192.168.0.1 dev ens5 proto dhcp src 192.168.0.174 metric 512
 for i in $N1 $N2 $N3; do echo ">> node $i <<"; ssh ec2-user@$i curl -s http://localhost:61679/v1/enis | jq; echo; done
 ```
 
-### 3.2. Network-Multitool 디플로이먼트 생성 
+### Network-Multitool 디플로이먼트 생성 
 
 Network-Multitool: https://github.com/Praqma/Network-MultiTool
 
@@ -331,7 +331,7 @@ kubectl exec -it $PODNAME3 -- ip -br -c addr
 
 ```
 
-### 3.3. Pod 간 통신 테스트
+### Pod 간 통신 테스트
 
 ```Bash
 # 파드 IP 변수 지정
@@ -372,7 +372,7 @@ ip route show table 2
 
 ---
 
-### 3.4. Pod에서 외부 통신 (NAT 포함)
+### Pod에서 외부 통신 (NAT 포함)
 
 VPC CNI에서 iptable의 SNAT를 통하여 노드의 ENI IP로 변경되어 외부와 통신합니다.
 - 파드 shell 실행 후 외부로 ping 테스트 & 워커 노드에서 tcpdump 및 iptables 정보 확인
@@ -685,7 +685,7 @@ tcp      6 7 TIME_WAIT src=192.168.0.174 dst=15.221.12.224 sport=55226 dport=443
 ```
 
 ---
-### 3.5. AWS VPC CNI 주요 설정값 튜닝
+### AWS VPC CNI 주요 설정값 튜닝
 
 **현재 설정 확인하기**
 
@@ -799,7 +799,7 @@ for i in $N1 $N2 $N3; do echo ">> node $i <<"; ssh ec2-user@$i curl -s http://lo
 
 
 ---
-## 4. AWS LBC with L4(NLB)
+## AWS LBC with L4(NLB)
 
 - AWS LBC(파드)가 AWS Service 를 이용하는 방법 4가지
   - 방안1(IRSA)
@@ -807,7 +807,7 @@ for i in $N1 $N2 $N3; do echo ">> node $i <<"; ssh ec2-user@$i curl -s http://lo
   - 방안3(EC2 Instance Profile - 비권장)
   - 방안4(Static credentials - 보안 취약, 금지)
 
-### 4.1. IRSA
+### IRSA
 
 OIDC Provider는 사용자 인증을 수행하고 사용자의 신원을 담은 토큰을 발행하는 인증 서버입니다.
 EKS에서 IRSA(IAM Roles for Service Accounts) 설정 시 AWS가 OIDC Provider 역할을 하여 Kubenetes 서비스 계정에 IAM 역할을 부여합니다.
@@ -934,7 +934,7 @@ metadata:
 }
 ```
 
-### 4.2. LBC 설치
+### LBC 설치
 
 [Helm 설치](https://github.com/aws/eks-charts/tree/master/stable/aws-load-balancer-controller), [공식 Docs](https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/deploy/installation/), [Values](https://github.com/aws/eks-charts/blob/master/stable/aws-load-balancer-controller/values.yaml)
 
@@ -1034,7 +1034,7 @@ aws-node나 kube-proxy 같은 시스템 파드는 호스트의 네트워크(host
     - AWS Console: 
         - ![](images/2026-03-26-21-07-10.png)
 
-### 4.3. 도전과제: eks 모듈로 배포 시, 관리형 노드 그룹에 시작 템플릿에 imds hop limit = 2 적용 설정 해보기
+### 도전과제: eks 모듈로 배포 시, 관리형 노드 그룹에 시작 템플릿에 imds hop limit = 2 적용 설정 해보기
 
 EKS Managed Node Group을 사용하는 경우, 시작 템플릿(Launch Template)에서 인스턴스 메타데이터 옵션에서 '메타데이터 응답 홉 제한(Metadata response hop limit)'을 2로 변경하여 노드 그룹을 업데이트해야 합니다.
 
@@ -1126,7 +1126,7 @@ kubectl describe clusterroles.rbac.authorization.k8s.io aws-load-balancer-contro
 
 ```
 
-### 4.4. NLB로 서비스/파드 배포하기
+### NLB로 서비스/파드 배포하기
 
 ```
 # 모니터링
@@ -1295,9 +1295,9 @@ kubectl describe clusterroles.rbac.authorization.k8s.io aws-load-balancer-contro
 
 ---
 
-## 5. Ingress with L7(ALB)
+## Ingress with L7(ALB)
 
-### 5.1. 서비스/파드 배포 테스트 with Ingress(ALB)
+### 서비스/파드 배포 테스트 with Ingress(ALB)
 
 ```Bash
 # 게임 파드와 Service, Ingress 배포
@@ -1455,9 +1455,9 @@ Target Group CRD를 가지고, EKS 업그레이드할 때 Target Group과 ALB를
 
 ---
 
-## 6. ExternalDNS
+## ExternalDNS
 
-### 6.1. ExternalDNS 설치
+### ExternalDNS 설치
 
 **IRSA 생성하기**
 
@@ -1563,7 +1563,7 @@ metadata:
 
 ```
 
-### 6.2. ExternalDNS 배포하기
+### ExternalDNS 배포하기
 
 ```Bash
 # 자신의 도메인 변수 지정 
@@ -1633,7 +1633,7 @@ external-dns-756c9d56cb-rs28z   1/1     Running   0          10m
 kubectl logs deploy/external-dns -n kube-system -f
 ```
 
-### 6.3. NLB + ExternalDNS 도메인 연동
+### NLB + ExternalDNS 도메인 연동
 ```Bash
 # 터미널1 (모니터링)
 watch -d 'kubectl get pod,svc'
@@ -1739,7 +1739,7 @@ Tetris Game URL = http://tetris.siyoung.cloud
     - ![](./images/2026-03-27-02-02-48.png)
 - 리소스 삭제: `kubectl delete deploy,svc tetris` (위에서 정의한 sync 정책으로 연결된 리소스 삭제시 Route53 A레코드 함께 삭제)
 
-### 6.4. 도전과제: Service(NLB + TLS) + 도메인 연동(ExternalDNS)
+### 도전과제: Service(NLB + TLS) + 도메인 연동(ExternalDNS)
 
 ```Bash
 # 환경 변수 지정
@@ -1805,9 +1805,9 @@ EOF
 
 ---
 
-## 7. Gateway API
+## Gateway API
 
-### 7.1. Gateway API 설치
+### Gateway API 설치
 
 **사전 준비**
 
@@ -1946,7 +1946,7 @@ kubectl describe deploy -n kube-system external-dns | grep Args: -A15
       --provider=aws
 ```
 
-### 7.2. 샘플 애플리케이션 배포
+### 샘플 애플리케이션 배포
 
 **모니터링**
 
@@ -2194,7 +2194,7 @@ echo -e "GW Api Sample URL = http://$GWMYDOMAIN"
 
 ---
 
-## 8. 자원 삭제
+## 자원 삭제
 
 ```Bash
 # IRSA 설정 삭제
@@ -2212,7 +2212,7 @@ terraform destroy -auto-approve && rm -rf ~/.kube/config
 
 ---
 <!-- 
-## 9. 2주차 도전 과제
+## 2주차 도전 과제
 
 - `도전과제` 두 번째 관리형 노드 추가 하여, **노드 부트스트랩 과정에 kubelet maxPods 110개 적용** 후 해당 노드에 **디플로이먼트 배포** by 테라폼 - [참고](https://kkamji.net/posts/eks-max-pod-limit/)
 - `도전과제` Custom Networking 설정 및 동작 확인 해보기 by 테라폼 - [Docs](https://docs.aws.amazon.com/ko_kr/eks/latest/best-practices/custom-networking.html) , [Workshop](https://www.eksworkshop.com/docs/networking/vpc-cni/custom-networking/)

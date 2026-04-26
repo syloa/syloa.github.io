@@ -142,8 +142,8 @@ nav:
           - AEWS 4주차 - EKS AuthN/AuthZ: kubernetes/eks/aews/aews-week04-01.md
         - AEWS 5주차:
           - AEWS 5주차 - EKS Troubleshooting: kubernetes/eks/aews/aews-week05-01.md
-        # - AEWS 6주차:
-        #   - AEWS 6주차 - EKS Best Practices: kubernetes/eks/aews/aews-week06-01.md
+        - AEWS 6주차:
+          - AEWS 6주차 - CI/CD with Amazon EKS Hands-on: kubernetes/eks/aews/aews-week06-01-ko.md
   - Talks:
     - 2026:
       - AWS Partner Summit Seoul 2026:

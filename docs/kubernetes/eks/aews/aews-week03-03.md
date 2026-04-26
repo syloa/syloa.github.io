@@ -12,7 +12,7 @@ tags:
 > *CloudNet 팀의 [2026년 AWS EKS Workshop Study 4기](https://gasidaseo.notion.site/26-AWS-EKS-Hands-on-Study-4-31a50aec5edf804b8294d8d512c43370) 3주차 학습 내용을 담고 있습니다.*
 
 
-## 1. EKS Node Viewer 
+## EKS Node Viewer 
 
 ![](images/i14g-rpmn0th14.png)
 
@@ -108,7 +108,7 @@ AWS_PROFILE=myprofile AWS_REGION=ap-southeast-1
 ```
 </details>
 
-## 2. kube-ops-view 
+## kube-ops-view 
 
 
 ![](images/i38g-rpmn0th38.png)
@@ -236,11 +236,11 @@ kubectl delete ingress -n kube-system kubeopsview
 
 </details>
 
-## 3. Prometheus and Grafana 
+## Prometheus and Grafana 
 
-### 3.1. kube-prometheus-stack helm 배포
+### kube-prometheus-stack helm 배포
 
-#### 3.1.1. 설치 및 접근
+#### 설치 및 접근
 
 <details><summary>설치 및 접근</summary>
 
@@ -411,7 +411,7 @@ helm uninstall -n monitoring kube-prometheus-stack
 
 </details>
 
-#### 3.1.2. EKS 컨트롤 플레인 원시 지표
+#### EKS 컨트롤 플레인 원시 지표
 
 EKS 컨트롤 플레인 원시 지표(메트릭)을 Prometheus 형식으로 가져오기 - [Docs](https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/view-raw-metrics.html) , [Blog](https://devfloor9.github.io/engineering-playbook/docs/eks-best-practices/control-plane-scaling/eks-control-plane-crd-scaling)
 
@@ -506,7 +506,7 @@ kubectl rolesum kube-prometheus-stack-prometheus -n monitoring
   ...
 ```
 
-#### 3.1.2. 도전과제 
+#### 도전과제 
 
 > 참고자료: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
 

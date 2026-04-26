@@ -13,11 +13,11 @@ tags:
 > *CloudNet 팀의 [2026년 AWS EKS Workshop Study 4기](https://gasidaseo.notion.site/26-AWS-EKS-Hands-on-Study-4-31a50aec5edf804b8294d8d512c43370) 5주차 과제 작성내용입니다.*
 
 
-## 1. EKS ELB 스케일 다운 시 트래픽 손실 문제와 해결
+## EKS ELB 스케일 다운 시 트래픽 손실 문제와 해결
 
 !!! info "AWS 공식 블로그 글 [How to rapidly scale your application with ALB on EKS (without losing traffic)](https://aws.amazon.com/ko/blogs/containers/how-to-rapidly-scale-your-application-with-alb-on-eks-without-losing-traffic/)의 내용을 정리하였습니다."
 
-### 1.1. K8s Probe와 ALB Health Check의 독립성
+### K8s Probe와 ALB Health Check의 독립성
 
 K8s Probe와 ALB Health Check는 서로의 결과를 공유하지 않고 완전히 독립적으로 동작합니다. 
 
@@ -47,7 +47,7 @@ AWS ALB는 기본 설정으로 15초 간격으로 헬스체크를 수행하며, 
 
 표 출처: [Link](https://devfloor9.github.io/engineering-playbook/slides/eks-debugging/)
 
-### 1.2. Scale-In Flow (문제 시나리오)
+### Scale-In Flow (문제 시나리오)
 
 EKS에서 HPA는 아래 순서로 Pod를 Scale-In 합니다.
 
@@ -85,7 +85,7 @@ ALB Controller가 Pod의 상태 변화를 감지하고 Target Group에서 deregi
 - ALB의 기본 헬스체크 간격(15초)이 너무 길어서 Pod 종료 신호를 빠르게 감지하지 못함
 - Pod가 graceful shutdown 처리를 시작하기도 전에 ALB 요청을 받음
 
-### 1.3. 해결 방법
+### 해결 방법
 
 AWS 블로그에서는 아래 세 가지 방법을 제시합니다.
 
@@ -93,7 +93,7 @@ AWS 블로그에서는 아래 세 가지 방법을 제시합니다.
 2. ALB Health Check Interval 조정 — 상태 변화를 빠르게 감지
 3. PreStop hook + Readiness Probe 연동 — SIGTERM 전에 ALB deregister 완료 대기
 
-#### 1.3.1. 상태확인 전용 엔드포인트 설정
+#### 상태확인 전용 엔드포인트 설정
 
 비즈니스 로직과 분리된 상태확인 전용 엔드포인트(`/health`)를 만들어, Pod가 종료 중일 때만 이 엔드포인트가 500를 반환하도록 구현합니다.
 
@@ -124,7 +124,7 @@ def health(request):
 
 이 방식으로 `/health`가 5xx를 반환하면, ALB는 unhealthy threshold를 넘기는 즉시 Pod를 unhealthy로 판정하고 draining을 시작합니다.
 
-#### 1.3.2. ALB Health Check Interval 조정
+#### ALB Health Check Interval 조정
 
 ALB와 readiness probe 모두 상태확인 전용 엔드포인트를 바라보도록 설정하고, ALB가 Pod의 상태 변화를 빠르게 감지할 수 있도록 헬스체크 간격을 기본값 15초에서 3초로 조정합니다. 
 
@@ -148,7 +148,7 @@ metadata:
 - 3초로 설정하면 Pod 종료 신호 후 3-6초 내 ALB가 unhealthy를 감지
 - readinessProbe의 주기(아래 1.3.3)와 동일하게 맞춰야 함
 
-#### 1.3.3. PreStop hook + Readiness Probe 설정
+#### PreStop hook + Readiness Probe 설정
 
 PreStop hook은 **SIGTERM 신호 전에** kubelet이 실행합니다. 이를 이용해 ALB에게 먼저 상태를 알린 후, SIGTERM 처리를 진행합니다.
 
@@ -220,7 +220,7 @@ kubelet의 Pod 종료 순서는:
 
 PreStop hook에서 충분한 시간(120초)을 sleep하면, 그동안 ALB의 connection draining이 완료됩니다.
 
-### 1.4. 개선된 Scale-In Flow
+### 개선된 Scale-In Flow
 
 위의 3가지 모두 적용 후, Scale-In 발생 시 **Pod가 먼저 죽지 않고, ALB가 먼저 인지하고 트래픽을 차단**합니다.
 
@@ -237,7 +237,7 @@ sequenceDiagram
     HPA->>kubelet: 종료 대상 Pod 선택
 
     rect rgb(200, 220, 255)
-        Note over kubelet,Pod: Phase 1: PreStop Hook 실행 (SIGTERM 전)
+        Note over kubelet,Pod: Phase 1: PreStop Hook 실행 (SIGTERM 전)       
         kubelet->>Pod: preStop hook 실행
         Pod->>Pod: /health 상태 플래그 변경
     end
@@ -292,9 +292,9 @@ AWS 공식 블로그에서 소개한 **Order API** 서비스의 개선 결과입
 - **502 30건 (kubelet 감지)**: 이는 kubelet의 readinessProbe 감지로 인한 것으로, 사용자에게 보이지 않는 내부 로그
 - **실제 사용자 영향**: 거의 없음 (대부분의 요청이 정상 처리됨) -->
 
-### 1.5. 주의사항
+### 주의사항
 
-#### 1.5.1. terminationGracePeriodSeconds
+#### terminationGracePeriodSeconds
 
 PreStop hook의 sleep 시간이 `terminationGracePeriodSeconds`보다 길면, kubelet이 SIGKILL로 Pod를 강제 종료합니다.
 ALB가 대상을 제외하기 전에 Pod가 먼저 죽으면 5xx 에러가 다시 발생하게 되므로 `terminationGracePeriodSeconds` 값을 반드시 확인해야 합니다.
@@ -310,7 +310,7 @@ spec:
             command: ["/bin/sh", "-c", "sed -i 's/healthy/unhealthy/g' /app/health.py && sleep 120"]
 ```
 
-#### 1.5.2. 헬스체크 interval과 readinessProbe 주기 동기화
+#### 헬스체크 interval과 readinessProbe 주기 동기화
 
 ALB와 kubelet이 동시에 상태를 감지하도록 주기를 맞춰야 합니다.
 
@@ -336,7 +336,7 @@ ALB와 kubelet이 동시에 상태를 감지하도록 주기를 맞춰야 합니
 - Cause: readiness probe의 `failureThreshold` 값이 크거나, ALB timeout이 작음
 - Fix: `failureThreshold: 1`, ALB timeout 120초 이상 설정 -->
 
-### 1.6. 요약
+### 요약
 
 | 구성 요소 | 역할 | 설정값 |
 | :--- | :--- | :--- |
@@ -347,19 +347,19 @@ ALB와 kubelet이 동시에 상태를 감지하도록 주기를 맞춰야 합니
 | **terminationGracePeriodSeconds** | preStop sleep보다 크게 설정하여 강제 kill 방지 | `150` |
 | **Ingress annotation** | ALB가 비즈니스 경로 대신 /health만 체크 | `alb.ingress.kubernetes.io/healthcheck-path: /health` |
 
-### 1.7. ALB 트래픽 손실 방지 체크리스트
+### ALB 트래픽 손실 방지 체크리스트
 
-#### 1.7.1. 애플리케이션 코드
+#### 애플리케이션 코드
 - [ ] `/health` 엔드포인트 구현 (비즈니스 로직과 분리)
 - [ ] SIGTERM/SIGINT 핸들러에서 shutdown flag 설정 → `/health` 반환값 변경
 - [ ] graceful shutdown 로직 구현 (pending request 처리, DB 연결 정리 등)
 
-#### 1.7.2. Pod Spec (Deployment/StatefulSet)
+#### Pod Spec (Deployment/StatefulSet)
 - [ ] `terminationGracePeriodSeconds: 150` 설정 (preStop 120s보다 여유있게 설정)
 - [ ] `preStop` hook: `sleep 120`
 - [ ] `readinessProbe`: path=/health(ALB 헬스체크 경로와 일치), periodSeconds=3
 
-#### 1.7.3. Ingress 사용 시 Annotation 설정
+#### Ingress 사용 시 Annotation 설정
 - [ ] `alb.ingress.kubernetes.io/healthcheck-path: /health`(상태확인 엔드포인트 사용)
 - [ ] `alb.ingress.kubernetes.io/healthcheck-interval-seconds: '3'`
 
@@ -444,7 +444,7 @@ if __name__ == '__main__':
     app.run(port=8080, threaded=True)
 ```
 
-### 2. Deployment 완전한 구성
+### Deployment 완전한 구성
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -557,7 +557,7 @@ spec:
               number: 80
 ```
 
-### 3. 배포 후 검증
+### 배포 후 검증
 ```bash
 # 1. Healthcheck 정상 응답 확인
 kubectl port-forward svc/order-api 8080:80
@@ -579,7 +579,7 @@ aws elbv2 describe-target-health \
 # - TargetResponseTime
 ```
 
-### 4. 트러블슈팅
+### 트러블슈팅
 
 **Pod가 150초 넘게 기다린다:**
 - Security Group에서 ALB → Pod 통신 차단 확인
