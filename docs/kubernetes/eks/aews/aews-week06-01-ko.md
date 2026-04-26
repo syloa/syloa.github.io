@@ -231,13 +231,13 @@ kustomization/sources                   refs/heads/main@sha1:664677a4   False   
 
 </details>
 
-| CRD | 역할 | 비유 |
+| CRD | 역할 | 설명 |
 |-----|------|------|
-| `gitrepository` | Git 저장소 연결 정의 | "이 Git repo를 주기적으로 확인해라" |
-| `helmrepository` | Helm chart 저장소 연결 | "이 OCI/HTTP repo에서 chart를 가져와라" |
+| `gitrepository` | Git 저장소 연결 정의 | Git repo를 주기적으로 확인 |
+| `helmrepository` | Helm chart 저장소 연결 | 이 OCI/HTTP repo에서 chart 가져오기 |
 | `helmchart` | HelmChart 오브젝트 관리 | Helm chart 버전 추적 |
 | `helmrelease` | Helm chart 배포 선언 | `helm install`의 선언적 버전 |
-| `kustomization` | Kustomize 적용 선언 | "이 경로의 YAML을 apply해라" |
+| `kustomization` | Kustomize 적용 선언 | 이 경로의 YAML을 apply |
 
 Flux의 모든 리소스가 `READY`상태인 것을 확인하면, Flux가 Gitea 저장소를 모니터링 하도록 접근 권한을 설정하고 등록합니다.
 
@@ -1003,3 +1003,11 @@ spec:
 3. **왜 SQS 기반 온보딩인가**: 온보딩 요청의 내구성 보장과 비동기 처리를 위해서입니다. HTTP 기반이라면 일시적 장애 시 요청이 유실됩니다.
 
 4. **왜 티어별 공유/격리를 Helm values로 표현하는가**: 인프라 결정을 코드로 문서화하기 위해서입니다. `producer.enabled: false`가 "이 테넌트는 공유 Producer를 사용한다"는 의도를 명시적으로 표현합니다. -->
+
+
+## 느낀 점
+
+실습을 진행하면서 Platform Engineering이 지향하는 추상화가 비즈니스 속도를 크게 향상시킬 수 있다는 점을 체감할 수 있었습니다. 이 워크샵을 기준으로 플랫폼 사용자(개발팀)는 tenant의 id, tier, 릴리즈 버전만 알면 복잡한 인프라 작업은 모두 플랫폼이 처리할 수 있어, 직접 관리할 때의 자유도 대신 표준화 템플릿이 주는 속도가 사용자에게는 이점이 될 수 있음을 이해하였습니다.
+
+반면 플랫폼은 인프라를 직접 만지는 것과는 다르게 한계가 있고, 유지보수와 고도화가 필요한 제품이 되기에 인프라 엔지니어의 역할이 단순 운영에서 플랫폼 고도화로 변하고 있음을 실감했습니다.
+인프라를 하나의 제품으로 바라보고 이를 어떻게 추상화하여 사용자에게 전달할지 고민하는 설계 역량이 중요하다는 것을 알았고, 앞으로는 인프라 자동화를 설계할 때 기능의 완성도뿐만 아니라 사용하는 동료의 편의성도 더 욕심을 내볼 것 같습니다. 

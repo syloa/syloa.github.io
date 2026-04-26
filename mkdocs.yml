@@ -19,7 +19,7 @@ theme:
     - content.tabs.link
   palette:
     - scheme: default
-      media: "(prefers-color-scheme: light)"
+      media: "(prefers-color-scheme: dark)"
       primary: black
       toggle:
         icon: material/weather-night
