@@ -3,6 +3,9 @@ site_description: Scribbling about Cloud, Infra, and everything in between
 site_author: Siyoung Lee
 site_url: https://syloa.github.io/
 use_directory_urls: true
+repo_url: https://github.com/syloa/syloa.github.io
+repo_name: syloa/syloa.github.io
+
 
 theme:
   name: material
@@ -12,11 +15,12 @@ theme:
     - navigation.sections
     - navigation.expand
     - content.code.copy
-    # - toc.follow # Side TOC
-    - toc.integrate
+    - toc.follow # Side TOC
+    # - toc.integrate
     - navigation.top
     - touch
     - content.tabs.link
+    - i18n
   palette:
     - scheme: default
       media: "(prefers-color-scheme: dark)"
@@ -51,6 +55,21 @@ markdown_extensions:
       custom_checkbox: true
       clickable_checkbox: true
 plugins:
+  - i18n:
+      # default_locale: en
+      # reconfigure_sitemap: true
+      languages:
+        - locale: en
+          name: English
+          build: true
+          default: true
+          # fallback_to: ko
+        - locale: ko
+          name: 한국어
+          build: true
+          # fallback_to: en
+  # - sitemap:
+  #     filename: sitemap.xml
   - search:
       lang: [en, ko]
   # - git-revision-date-localized:
@@ -74,27 +93,17 @@ plugins:
       start_level: 2
       exclude:
         - index.md
+        - tags.md
   # - awesome-pages
-  # - i18n:
-  #     languages:
-  #       - locale: en 
-  #         name: English
-  #         default: true
-  #         build: true
-  #         fallback_to: kr
-  #       - locale: ko
-  #         name: 한국어
-  #         build: true
-  #         fallback_to: en
       
 extra:
-  # alternate:
-  #   - name: 한국어
-  #     link: /ko/
-  #     lang: ko
-  #   - name: English
-  #     link: /en/
-  #     lang: en
+  alternate:
+    - name: English
+      link: /en/
+      lang: en
+    - name: 한국어
+      link: /ko/
+      lang: ko
   generator: false
   meta:
     google-site-verification: "google-site-verification=9enAp2_KQ_J2TbYSbYhtTF7RUfFLFytvhnAM0TeX8sg"
@@ -123,32 +132,64 @@ nav:
         #     - 03_배포 전략과 서비스 디스커버리:
         #     - 04_보안 및 스토리지:
         #     - 05_운영 및 CI/CD:
-  
+  # - EKS Study: 
+  #     - 2026-aws-eks-workshop-study:
+  #       - Week 1:
+  #         - EKS 소개 및 배포: eks-study/kubernetes/eks/aews/aews-week01.md
+  #       - Week 2:
+  #         - EKS Networking: eks-study/kubernetes/eks/aews/aews-week02-01.md
+  #         - EKS Networking Hands-on: eks-study/kubernetes/eks/aews/aews-week02-02.md
+  #       - Week 3:
+  #         - EKS Pod Scaling: eks-study/kubernetes/eks/aews/aews-week03-01.md
+  #         - EKS Node Scaling: eks-study/kubernetes/eks/aews/aews-week03-02.md
+  #         - EKS Monitoring: eks-study/kubernetes/eks/aews/aews-week03-03.md
+  #       - Week 4:
+  #         - EKS AuthN/AuthZ: eks-study/kubernetes/eks/aews/aews-week04-01.md
+  #       - Week 5:
+  #         - EKS Troubleshooting: eks-study/kubernetes/eks/aews/aews-week05-01.md
+  #       - Week 6:
+  #         - CI/CD with Amazon EKS Hands-on: eks-study/kubernetes/eks/aews/aews-week06-01.md
   - Kubernetes: 
     # - Vanilla K8s:
     #   - 01_Kubernetes 기초: kubernetes/vanilla/01.md
     - EKS:
       - AEWS: 
-        - AEWS 1주차:
-          - AEWS 1주차 - EKS 소개 및 배포: kubernetes/eks/aews/aews-week01.md
-        - AEWS 2주차:
-          - AEWS 2주차 - EKS Networking: kubernetes/eks/aews/aews-week02-01.md
-          - AEWS 2주차 - EKS Networking Hands-on: kubernetes/eks/aews/aews-week02-02.md
-        - AEWS 3주차:
-          - AEWS 3주차 - 1) EKS Pod Scaling: kubernetes/eks/aews/aews-week03-01.md
-          - AEWS 3주차 - 2) EKS Node Scaling: kubernetes/eks/aews/aews-week03-02.md
-          - AEWS 3주차 - 3) EKS Monitoring: kubernetes/eks/aews/aews-week03-03.md
-        - AEWS 4주차:
-          - AEWS 4주차 - EKS AuthN/AuthZ: kubernetes/eks/aews/aews-week04-01.md
-        - AEWS 5주차:
-          - AEWS 5주차 - EKS Troubleshooting: kubernetes/eks/aews/aews-week05-01.md
-        - AEWS 6주차:
-          - AEWS 6주차 - CI/CD with Amazon EKS Hands-on: kubernetes/eks/aews/aews-week06-01-ko.md
+        # - AEWS 1주차:
+        #   - AEWS 1주차 - EKS 소개 및 배포: kubernetes/eks/aews/aews-week01.md
+        # - AEWS 2주차:
+        #   - AEWS 2주차 - EKS Networking: kubernetes/eks/aews/aews-week02-01.md
+        #   - AEWS 2주차 - EKS Networking Hands-on: kubernetes/eks/aews/aews-week02-02.md
+        # - AEWS 3주차:
+        #   - AEWS 3주차 - 1) EKS Pod Scaling: kubernetes/eks/aews/aews-week03-01.md
+        #   - AEWS 3주차 - 2) EKS Node Scaling: kubernetes/eks/aews/aews-week03-02.md
+        #   - AEWS 3주차 - 3) EKS Monitoring: kubernetes/eks/aews/aews-week03-03.md
+        # - AEWS 4주차:
+        #   - AEWS 4주차 - EKS AuthN/AuthZ: kubernetes/eks/aews/aews-week04-01.md
+        # - AEWS 5주차:
+        #   - AEWS 5주차 - EKS Troubleshooting: kubernetes/eks/aews/aews-week05-01.md
+        # - AEWS 6주차:
+        #   - AEWS 6주차 - CI/CD with Amazon EKS Hands-on: kubernetes/eks/aews/aews-week06-01.md
+        - Week 1:
+          - EKS 소개 및 배포: https://syloa.github.io/2026-aws-eks-workshop-study/kubernetes/eks/aews/aews-week01/
+        - Week 2:
+          - EKS Networking: https://syloa.github.io/2026-aws-eks-workshop-study/kubernetes/eks/aews/aews-week02-01/
+          - EKS Networking Hands-on: https://syloa.github.io/2026-aws-eks-workshop-study/kubernetes/eks/aews/aews-week02-02/
+        - Week 3:
+          - EKS Pod Scaling: https://syloa.github.io/2026-aws-eks-workshop-study/kubernetes/eks/aews/aews-week03-01/
+          - EKS Node Scaling: https://syloa.github.io/2026-aws-eks-workshop-study/kubernetes/eks/aews/aews-week03-02/
+          - EKS Monitoring: https://syloa.github.io/2026-aws-eks-workshop-study/kubernetes/eks/aews/aews-week03-03/
+        - Week 4:
+          - EKS AuthN/AuthZ: https://syloa.github.io/2026-aws-eks-workshop-study/kubernetes/eks/aews/aews-week04-01/
+        - Week 5:
+          - EKS Troubleshooting: https://syloa.github.io/2026-aws-eks-workshop-study/kubernetes/eks/aews/aews-week05-01/
+        - Week 6:
+          - CI/CD with Amazon EKS Hands-on: https://syloa.github.io/2026-aws-eks-workshop-study/kubernetes/eks/aews/aews-week06-01/
   - Talks:
     - 2026:
       - AWS Partner Summit Seoul 2026:
         - AWS Partner Summit Seoul 2026 - AWS Transform (ATX): talks/2026/aws-partner-summit-seoul-2026/aws-partner-summit-2026-atx.md
         # - AWS Partner Summit Seoul 2026 - Multi-Agent 시스템 구축: talks/2026/aws-partner-summit-seoul-2026/aws-partner-summit-2026-multi-agent.md
+  - Tags: tags.md
   # - CS:
   #   - Database System: cs/database/01.md
   #   - Discrete Mathematics: cs/discrete mathematics/01.md

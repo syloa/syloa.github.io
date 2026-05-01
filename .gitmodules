@@ -1,0 +1,3 @@
+[submodule "docs/eks-study"]
+	path = docs/eks-study
+	url = https://github.com/syloa/2026-aws-eks-workshop-study

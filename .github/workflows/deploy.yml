@@ -21,15 +21,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          submodules: 'recursive'
           fetch-depth: 0
 
+      - name: Update Submodules to Latest
+        run: |
+          git submodule update --init --recursive --remote
+          
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: 3.x
 
       - name: Install dependencies
-        run: pip install mkdocs-material mkdocs-git-revision-date-localized-plugin mkdocs-glightbox mkdocs-mermaid2-plugin mkdocs-enumerate-headings-plugin
+        run: pip install mkdocs-material mkdocs-git-revision-date-localized-plugin mkdocs-glightbox mkdocs-mermaid2-plugin mkdocs-enumerate-headings-plugin mkdocs-static-i18n
 
       - name: Build MkDocs
         run: mkdocs build
